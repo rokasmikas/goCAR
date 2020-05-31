@@ -4,6 +4,9 @@ import (
 	"github.com/go-pg/pg/v9"
 	"log"
 	"os"
+
+	controllers "github.com/rokasmikas/goCAR/controllers"
+
 )
 
 // postgresql connection
@@ -23,5 +26,9 @@ func Connect() *pg.DB {
 		os.Exit(100)
 	}
 	log.Printf("DB connection established")
+
+	controllers.CreateCarLogTable(db)
+	controllers.InitDB(db)
+
 	return db
 }
