@@ -59,7 +59,7 @@ export default {
         let o = this.carLogData
         let that = this
 
-        axios.post('/api/create', {
+        axios.post('/api/carlog/create', {
             name: o.name,
             make: o.make,
             model: o.model,

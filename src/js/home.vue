@@ -1,30 +1,54 @@
 <template>
-  <div>
-    <div>MyApp</div>
-    <button v-on:click="showMessage">This is test</button>
-    <router-link to="/addlog">Add log</router-link>
-    <div>{{message}}</div>
-  </div>
+<div>
+  <div>MyApp</div>
+  <router-link to="/addlog">Add log</router-link>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Brand (Make + model)</th>
+      <th>Reg</th>
+      <th>Year</th>
+      <th>Delete</th>
+    </tr>
+    <tr v-for="(item, key) in carlogs">
+      <th>
+        <router-link :to="{ name: 'showlog', params: {id: item.id} }">{{item.name}}</router-link>
+      </th>
+      <th> {{item.make}} {{item.model}} </th>
+      <th> {{item.reg}} </th>
+      <th> {{item.model}} </th>
+      <th> <button @click="deleteCarlog(item.id, key)">X</button></th>
+    </tr>
+  </table>
+</div>
 </template>
 <script>
-import axios from "axios";
-const appData = {
-  message: ""
-};
+import axios from "axios"
+
 export default {
   data() {
-    return appData;
+    return {
+      carlogs: null,
+    }
   },
   methods: {
-    showMessage: showMessage
+    setData(data) {
+      this.carlogs = data
+    },
+    deleteCarlog(id, key) {
+      axios.delete('/api/carlog/delete/' + id)
+        .then(res => {
+          this.$delete(this.carlogs, key)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    axios.get("/api/carlog/getAll").then(res => {
+      next(vm => vm.setData(res.data.data))
+    })
   }
-};
-function showMessage() {
-  axios.get("/api").then(res => {
-    console.log(res);
-    appData.message = res.data.message;
-  });
 }
 </script>
-<style>
-</style>

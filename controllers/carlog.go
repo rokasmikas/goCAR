@@ -107,3 +107,59 @@ func NewCarlog(c *gin.Context) {
 	return
 
 }
+
+func GetCarlog(c *gin.Context) {
+
+	carlogID := c.Param("carlogid")
+	log.Printf("Param: %v", carlogID)
+	carlog := &Carlog{ID: carlogID}
+
+	err := dbConnect.Select(carlog)
+
+	if err != nil {
+		log.Printf("Error: %v", err)
+
+		c.JSON(http.StatusNotFound, gin.H{
+			"status":  http.StatusNotFound,
+			"message": "Not found",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Single Carlog data",
+		"data":    carlog,
+	})
+	return
+}
+
+func DeleteCarlog(c *gin.Context) {
+	carlogID := c.Param("carlogid")
+
+	carlog := &Carlog{ID: carlogID}
+
+	err := dbConnect.Delete(carlog)
+
+	if err != nil {
+		log.Printf("Error while deleting: %v\n", err)
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  http.StatusInternalServerError,
+			"message": "Error",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Deleted carlog successfully",
+	})
+	return
+}
+
+func EditCarlog(c *gin.Context) {
+	carlogID := c.Param("carlogID")
+
+	var carlog Carlog
+
+	c.BindJSON(&carlog)
+}

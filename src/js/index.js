@@ -10,10 +10,13 @@ Vue.use(VueRouter)
 
 import Home from "./home.vue"
 import AddLog from "./addCarLog.vue"
+import ShowLog from "./showLog.vue"
 
+// TODO: Export router to different file
 const routes = [
   { path: '/', component: Home },
   { path: '/addlog', component: AddLog },
+  { path: '/carlog/:id', name: 'showlog', component: ShowLog },
 ]
 
 const router = new VueRouter({

@@ -52,17 +52,13 @@ func runServer(args arguments) error {
 
     // Routes
     // TODO: Export to seperate file
+    // TODO: Clean params
+    r.GET("/api/carlog/getAll", controllers.GetAllCarlogs)
+    r.POST("/api/carlog/create", controllers.NewCarlog)
+    r.GET("/api/carlog/get/:carlogid", controllers.GetCarlog)
+    r.DELETE("/api/carlog/delete/:carlogid", controllers.DeleteCarlog)
+    // r.PUT("/:carlogid", controllers.EditCarlog)
 
-    r.GET("/api", controllers.GetAllCarlogs)
-    r.POST("/api/create", controllers.NewCarlog)
-    // router.GET("/:carlogid", controllers.getCarlog)
-    // router.DELETE("/:carlogid", controllers.deleteCarlog)
-    // router.PUT("/:carlogid", controllers.editCarlog)
-
-
-    r.GET("/api/v1/hello", func(c *gin.Context) {
-        c.String(200, `{"message":"Initial"}`)
-    })
 
     if err := r.Run(fmt.Sprintf("%s:%d", args.BindAddress, args.BindPort)); err != nil {
         return err
