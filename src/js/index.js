@@ -9,11 +9,11 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Home from "./home.vue"
-import About from "./about.vue"
+import AddLog from "./addCarLog.vue"
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/about', component: About },
+  { path: '/addlog', component: AddLog },
 ]
 
 const router = new VueRouter({

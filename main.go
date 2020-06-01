@@ -10,6 +10,7 @@ import (
 
     "github.com/rokasmikas/goCAR/config"
 
+    controllers "github.com/rokasmikas/goCAR/controllers"
 )
 
 var logger = logrus.New()
@@ -48,6 +49,17 @@ func runServer(args arguments) error {
     r := gin.Default()
 
     r.Use(static.Serve("/", static.LocalFile(args.StaticContents, false)))
+
+    // Routes
+    // TODO: Export to seperate file
+
+    r.GET("/api", controllers.GetAllCarlogs)
+    r.POST("/api/create", controllers.NewCarlog)
+    // router.GET("/:carlogid", controllers.getCarlog)
+    // router.DELETE("/:carlogid", controllers.deleteCarlog)
+    // router.PUT("/:carlogid", controllers.editCarlog)
+
+
     r.GET("/api/v1/hello", func(c *gin.Context) {
         c.String(200, `{"message":"Initial"}`)
     })

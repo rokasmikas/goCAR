@@ -2,7 +2,7 @@
   <div>
     <div>MyApp</div>
     <button v-on:click="showMessage">This is test</button>
-    <router-link to="/get">Home</router-link>
+    <router-link to="/addlog">Add log</router-link>
     <div>{{message}}</div>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
   }
 };
 function showMessage() {
-  axios.get("/api/v1/hello").then(res => {
+  axios.get("/api").then(res => {
     console.log(res);
     appData.message = res.data.message;
   });
