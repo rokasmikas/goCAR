@@ -2,30 +2,22 @@
 <div>
 
   <!-- TODO: add bootstrap styles -->
-  <div v-show="showInput">
-    <label>Name</label>
-    <input type="text" v-model="carLogData.name" lazy>
-    </br>
-    <label>Make</label>
-    <input type="text" v-model="carLogData.make" lazy>
-    </br>
-    <label>Model</label>
-    <input type="text" v-model="carLogData.model" lazy>
-    </br>
-    <label>Reg</label>
-    <input type="text" v-model="carLogData.reg" lazy>
-    </br>
-    <label>Year</label>
-    <input type="text" v-model="carLogData.year" lazy>
-
-    <button @click="update">Update</button>
-  </div>
-
-  <h4>{{carLogData.name}}</h4>
-  <h4>{{carLogData.make}}</h4>
-  <h4>{{carLogData.model}}</h4>
-  <h4>{{carLogData.reg}}</h4>
-  <h4>{{carLogData.year}}</h4>
+  <label>Name</label>
+  <input type="text" v-model="carLogData.name" :disabled="noneditable" lazy>
+  </br>
+  <label>Make</label>
+  <input type="text" v-model="carLogData.make" :disabled="noneditable" lazy>
+  </br>
+  <label>Model</label>
+  <input type="text" v-model="carLogData.model" :disabled="noneditable" lazy>
+  </br>
+  <label>Reg</label>
+  <input type="text" v-model="carLogData.reg" :disabled="noneditable" lazy>
+  </br>
+  <label>Year</label>
+  <input type="text" v-model="carLogData.year" :disabled="noneditable" lazy>
+  </br>
+  <button @click="update" :disabled="noneditable">Update</button>
 
   <button @click="editLog">Edit</button>
 </div>
@@ -43,7 +35,7 @@ export default {
         reg: null,
         year: null,
       },
-      showInput: false,
+      noneditable: true,
     }
   },
   methods: {
@@ -51,13 +43,13 @@ export default {
       this.carLogData = data
     },
     editLog() {
-      this.showInput = !this.showInput
+      this.noneditable = !this.noneditable
     },
     update() {
       let o = this.carLogData
       let that = this
       console.log(this.$route.params.id)
-      axios.put('/api/carlog/update/'+this.$route.params.id, {
+      axios.put('/api/carlog/update/' + this.$route.params.id, {
           name: o.name,
           make: o.make,
           model: o.model,
@@ -65,8 +57,8 @@ export default {
           year: o.year,
         })
         .then(function(res) {
-            console.log(res)
-            that.showInput = false
+          console.log(res)
+          that.edit = false
         })
         .catch(function(err) {
           console.log(err)

@@ -1,6 +1,5 @@
 <template>
 <div>
-  <div>MyApp</div>
   <router-link to="/addlog">Add log</router-link>
   <table>
     <tr>

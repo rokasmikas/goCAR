@@ -68,8 +68,7 @@ export default {
           })
           .then(function(res) {
             if(res.status == 201) {
-              console.log("Created")
-              // TODO: open newly created page
+              that.$router.push({ name: 'showlog', params: {id: res.data.data} })
             }
           })
           .catch(function(err) {

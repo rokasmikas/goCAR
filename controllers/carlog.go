@@ -104,6 +104,7 @@ func NewCarlog(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{
 		"status":  http.StatusCreated,
 		"message": "Carlog created",
+		"data": id,
 	})
 	return
 

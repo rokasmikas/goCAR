@@ -8,6 +8,15 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+
+// partials
+import NavBar from "./partials/nav.vue"
+
+
+
+Vue.component('navbar', NavBar)
+
+//components
 import Home from "./home.vue"
 import AddLog from "./addCarLog.vue"
 import ShowLog from "./showLog.vue"
