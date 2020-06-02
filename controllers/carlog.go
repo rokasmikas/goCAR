@@ -67,8 +67,9 @@ func GetAllCarlogs(c *gin.Context) {
 }
 
 func NewCarlog(c *gin.Context) {
-	log.Printf("Init")
+
 	var carlog Carlog
+
 	c.BindJSON(&carlog)
 
 	id := guuid.New().String()
@@ -157,9 +158,27 @@ func DeleteCarlog(c *gin.Context) {
 }
 
 func EditCarlog(c *gin.Context) {
-	carlogID := c.Param("carlogID")
+	carlogID := c.Param("carlogid")
 
-	var carlog Carlog
-
+	carlog := &Carlog{ID: carlogID}
 	c.BindJSON(&carlog)
+
+	err := dbConnect.Update(carlog)
+
+	if err != nil {
+		log.Printf("Error while updating: %v\n", err)
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  500,
+			"message": "Error",
+		})
+
+	return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Updated carlog successfully",
+	})
+	return
 }

@@ -17,6 +17,8 @@
     </br>
     <label>Year</label>
     <input type="text" v-model="carLogData.year" lazy>
+
+    <button @click="update">Update</button>
   </div>
 
   <h4>{{carLogData.name}}</h4>
@@ -54,8 +56,8 @@ export default {
     update() {
       let o = this.carLogData
       let that = this
-
-      axios.post('/api/carlog/create', {
+      console.log(this.$route.params.id)
+      axios.put('/api/carlog/update/'+this.$route.params.id, {
           name: o.name,
           make: o.make,
           model: o.model,
@@ -63,7 +65,7 @@ export default {
           year: o.year,
         })
         .then(function(res) {
-            console.log("Updated")
+            console.log(res)
             that.showInput = false
         })
         .catch(function(err) {
@@ -72,10 +74,8 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log(to)
     axios.get("/api/carlog/get/" + to.params.id).then(res => {
       next(vm => {
-        // console.log(res.data.data)
         vm.setData(res.data.data)
       })
     })
