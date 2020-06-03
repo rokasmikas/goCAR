@@ -1,6 +1,6 @@
 <template>
 <div>
-  <a-menu theme="dark" mode="horizontal">
+  <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
     <a-menu-item>
       <router-link to="/">
         <a-icon type="home" />Home
