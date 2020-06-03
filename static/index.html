@@ -9,8 +9,20 @@
 
 <body>
   <div id="app">
-    <Navbar></Navbar>
-    <router-view></router-view>
+    <a-layout>
+      <a-layout-header>
+        <navbar></navbar>
+      </a-layout-header>
+      
+      <a-layout-content>
+        <router-view></router-view>
+      </a-layout-content>
+
+      <a-layout-footer>
+        <footbar></footbar>
+      </a-layout-footer>
+
+    </a-layout>
   </div>
   <script src="/js/bundle.js"></script>
 </body>

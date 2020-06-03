@@ -1,6 +1,6 @@
 <template>
 <div>
-  <a-menu mode="horizontal">
+  <a-menu theme="dark" mode="horizontal">
     <a-menu-item>
       <router-link to="/">
         <a-icon type="home" />Home

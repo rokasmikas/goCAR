@@ -13,10 +13,11 @@ Vue.use(Antd)
 
 // partials
 import NavBar from "./partials/nav.vue"
-
+import Footer from "./partials/footer.vue"
 
 
 Vue.component('navbar', NavBar)
+Vue.component('footbar', Footer)
 
 //components
 import Home from "./home.vue"
