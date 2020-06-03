@@ -4,10 +4,12 @@ import _ from 'lodash'
 import "babel-polyfill"
 import Vue from "vue"
 import VueRouter from 'vue-router'
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
 
 
 Vue.use(VueRouter)
-
+Vue.use(Antd)
 
 // partials
 import NavBar from "./partials/nav.vue"

@@ -16,7 +16,15 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: "babel-loader"
+        loader: "babel-loader",
+
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
       },
       {
         test: /\.s[ac]ss$/i,
@@ -40,5 +48,6 @@ module.exports = {
       "/api": "http://localhost:9080"
     }
   },
-  plugins: [new VueLoaderPlugin()]
+  plugins: [new VueLoaderPlugin(), ]
+
 };
