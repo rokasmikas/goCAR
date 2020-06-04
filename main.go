@@ -45,6 +45,7 @@ func runServer(args arguments) error {
 
     config.Connect()
 
+    gin.SetMode(gin.ReleaseMode)
 
     r := gin.Default()
 
