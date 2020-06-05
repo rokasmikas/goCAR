@@ -1,29 +1,27 @@
 <template>
 <div>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Brand (Make + model)</th>
-      <th>Reg</th>
-      <th>Year</th>
-      <th>Delete</th>
-    </tr>
-    <tr v-for="(item, key) in carlogs">
-      <th>
-        <router-link :to="{ name: 'showlog', params: {id: item.id} }">{{item.name}}</router-link>
-      </th>
-      <th> {{item.make}} {{item.model}} </th>
-      <th> {{item.reg}} </th>
-      <th> {{item.model}} </th>
-      <th> <button @click="deleteCarlog(item.id, key)">X</button></th>
-    </tr>
-  </table>
+  <a-row :gutter="24">
+  <div v-for="(item, key) in carlogs">
+    <a-col :span="8">
+    <card v-bind:make="item.make"
+          v-bind:model="item.model"
+          v-bind:reg="item.reg"
+          v-bind:year="item.year"
+          v-bind:id="item.id"
+    />
+  </a-col>
+  </div>
+</a-row>
 </div>
 </template>
 <script>
 import axios from "axios"
+import card from './components/card.vue'
 
 export default {
+  components: {
+    card,
+  },
   data() {
     return {
       carlogs: null,
