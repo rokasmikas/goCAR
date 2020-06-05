@@ -7,26 +7,9 @@ import (
 	guuid "github.com/google/uuid"
 	"log"
 	"net/http"
-	"time"
+
+	"github.com/rokasmikas/goCAR/models"
 )
-
-type Carlog struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	Make      string    `json:"make"`
-	Model     string    `json:"model"`
-	Reg       string    `json:"reg"`
-	Year      string    `json:"year"`
-	Active    string    `json:"active"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-}
-
-var dbConnect *pg.DB
-
-func InitDB(db *pg.DB) {
-	dbConnect = db
-}
 
 func CreateCarLogTable(db *pg.DB) error {
 
@@ -34,7 +17,7 @@ func CreateCarLogTable(db *pg.DB) error {
 		IfNotExists: true,
 	}
 
-	err := db.CreateTable(&Carlog{}, opts)
+	err := db.CreateTable(&models.Carlog{}, opts)
 
 	if err != nil {
 		log.Printf("Error creating table : %v\n", err)
@@ -45,7 +28,7 @@ func CreateCarLogTable(db *pg.DB) error {
 }
 
 func GetAllCarlogs(c *gin.Context) {
-	var carlogs []Carlog
+	var carlogs []models.Carlog
 
 	err := dbConnect.Model(&carlogs).Select()
 
@@ -68,7 +51,7 @@ func GetAllCarlogs(c *gin.Context) {
 
 func NewCarlog(c *gin.Context) {
 
-	var carlog Carlog
+	var carlog models.Carlog
 
 	c.BindJSON(&carlog)
 
@@ -82,7 +65,7 @@ func NewCarlog(c *gin.Context) {
 	active := "True"
 
 	// TODO: Sanitize inputs
-	err := dbConnect.Insert(&Carlog{
+	err := dbConnect.Insert(&models.Carlog{
 		ID:     id,
 		Name:   name,
 		Make:   make,
@@ -114,7 +97,7 @@ func GetCarlog(c *gin.Context) {
 
 	carlogID := c.Param("carlogid")
 	log.Printf("Param: %v", carlogID)
-	carlog := &Carlog{ID: carlogID}
+	carlog := &models.Carlog{ID: carlogID}
 
 	err := dbConnect.Select(carlog)
 
@@ -138,7 +121,7 @@ func GetCarlog(c *gin.Context) {
 func DeleteCarlog(c *gin.Context) {
 	carlogID := c.Param("carlogid")
 
-	carlog := &Carlog{ID: carlogID}
+	carlog := &models.Carlog{ID: carlogID}
 
 	err := dbConnect.Delete(carlog)
 
@@ -161,7 +144,7 @@ func DeleteCarlog(c *gin.Context) {
 func EditCarlog(c *gin.Context) {
 	carlogID := c.Param("carlogid")
 
-	carlog := &Carlog{ID: carlogID}
+	carlog := &models.Carlog{ID: carlogID}
 	c.BindJSON(&carlog)
 
 	err := dbConnect.Update(carlog)
