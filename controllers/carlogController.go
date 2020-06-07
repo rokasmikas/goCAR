@@ -7,6 +7,7 @@ import (
 	guuid "github.com/google/uuid"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/rokasmikas/goCAR/models"
 )
@@ -73,6 +74,8 @@ func NewCarlog(c *gin.Context) {
 		Reg:    reg,
 		Year:   year,
 		Active: active,
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
 	})
 
 	if err != nil {
@@ -95,11 +98,14 @@ func NewCarlog(c *gin.Context) {
 
 func GetCarlog(c *gin.Context) {
 
+
 	carlogID := c.Param("carlogid")
 	log.Printf("Param: %v", carlogID)
 	carlog := &models.Carlog{ID: carlogID}
 
 	err := dbConnect.Select(carlog)
+	//TODO : Convert orders to struct later
+	orders := getAssociatedOrders(carlogID)
 
 	if err != nil {
 		log.Printf("Error: %v", err)
@@ -111,9 +117,10 @@ func GetCarlog(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"status":  http.StatusOK,
-		"message": "Single Carlog data",
-		"data":    carlog,
+		"status":  			 http.StatusOK,
+		"message": 			 "Single Carlog data",
+		"data":    			 carlog,
+		"associated":    orders,
 	})
 	return
 }
