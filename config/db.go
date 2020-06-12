@@ -28,6 +28,7 @@ func Connect() *pg.DB {
 	log.Printf("DB connection established")
 
 	controllers.CreateCarLogTable(db)
+	controllers.CreateOrderTable(db)
 	controllers.InitDB(db)
 
 	return db

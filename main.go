@@ -59,6 +59,8 @@ func runServer(args arguments) error {
     r.DELETE("/api/carlog/delete/:carlogid", controllers.DeleteCarlog)
     r.PUT("api/carlog/update/:carlogid", controllers.EditCarlog)
 
+    r.GET("/api/orders/:carlogid/getAll", controllers.GetAllOrders)
+    r.POST("/api/orders/:carlogid/create", controllers.NewOrder)
 
     if err := r.Run(fmt.Sprintf("%s:%d", args.BindAddress, args.BindPort)); err != nil {
         return err
